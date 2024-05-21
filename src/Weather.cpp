@@ -18,6 +18,8 @@ Weather::Weather(Ili9341 *tft,  char * buf, size_t bufSize) {
 	pTft = tft;
 	pBuffer = buf;
 	xBufSize = bufSize;
+
+	setPos(0.0, 0.0);
 }
 
 Weather::~Weather() {
@@ -37,8 +39,8 @@ void Weather::update(){
 	std::map<std::string, std::string> query;
 
 	query["appid"]=OPENWEATHERMAPKEY;
-	query["lat"] = "50.822529";
-	query["lon"] = "-0.137163";
+	query["lat"] = xLat;
+	query["lon"] = xLon;
 
 	req.setForceTLS12(true);
 	res = req.get(url, &query);
@@ -187,4 +189,10 @@ void Weather::displayIcon(){
 	} else {
 		printf("WS failed %d\n", req.getStatusCode());
 	}
+}
+
+
+void Weather::setPos(float lat, float lon){
+	sprintf(xLat, "%f", lat);
+	sprintf(xLon, "%f", lon);
 }

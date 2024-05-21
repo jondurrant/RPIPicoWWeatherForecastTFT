@@ -13,17 +13,36 @@
 #include "pico/stdlib.h"
 
 
+#define POS_LEN 10
+
+
 class Weather {
 public:
 	Weather(Ili9341 *tft, char * buf, size_t bufSize);
 	virtual ~Weather();
 
 
+	/***
+	 * Update weather forecast data
+	 */
 	void update();
 
+	/***
+	 * Display Weather forecast text
+	 */
 	void display();
 
+	/***
+	 * Display Weather Icon for the forecast
+	 */
 	void displayIcon();
+
+	/***
+	 * Require Latitude and Longitude for weather
+	 * @param lat
+	 * @param lon
+	 */
+	void setPos(float lat, float lon);
 
 private:
 	Ili9341 *pTft = NULL;
@@ -37,6 +56,9 @@ private:
 
 	char * pBuffer;
 	size_t xBufSize;
+
+	char xLat[POS_LEN];
+	char xLon[POS_LEN];
 
 
 };

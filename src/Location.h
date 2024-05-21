@@ -20,11 +20,26 @@ public:
 	Location(Ili9341 *tft, char * buf, size_t bufSize);
 	virtual ~Location();
 
+	/***
+	 * Update location data
+	 */
 	void update();
 
+	/***
+	 * Display a local map of the loxation
+	 */
 	void display();
 
+	/***
+	 * Get returned latitude
+	 * @return
+	 */
 	float getLat();
+
+	/***
+	 * Get returned longitude
+	 * @return
+	 */
 	float getLon();
 
 private:

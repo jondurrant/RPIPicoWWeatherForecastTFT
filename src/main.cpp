@@ -164,35 +164,29 @@ void main_task(void* params){
 	location.display();
 	vTaskDelay(5000);
 
-
-
 	//Update weather display
 	Weather weather(&tft, userBuf, BUF_LEN);
-	weather.update();
-	weather.display();
-	weather.displayIcon();
-
-
-	runTimeStats();
-
+	weather.setPos(location.getLat(), location.getLon());
 
 
 	while (true){
 
-	//runTimeStats();
+		if (!WifiHelper::isJoined()){
+			  printf("AP Link is down\n");
 
-	vTaskDelay(3000);
+			  if (WifiHelper::join(WIFI_SSID, WIFI_PASSWORD)){
+				printf("Connect to Wifi\n");
+			  } else {
+				printf("Failed to connect to Wifi \n");
+			  }
+		}
 
+		weather.update();
+		weather.display();
+		weather.displayIcon();
 
-	if (!WifiHelper::isJoined()){
-	  printf("AP Link is down\n");
-
-	  if (WifiHelper::join(WIFI_SSID, WIFI_PASSWORD)){
-		printf("Connect to Wifi\n");
-	  } else {
-		printf("Failed to connect to Wifi \n");
-	  }
-	}
+		//Sleep for about 10 minutes
+		vTaskDelay(10 * 60 * 1000);
 
 	}
 
